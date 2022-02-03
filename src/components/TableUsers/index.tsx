@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import { DataContext } from "../../context/DataProvider";
 import {
   Container,
   Form,
@@ -10,14 +9,24 @@ import {
 } from "react-bootstrap";
 import moment from "moment";
 
+
+import { DataContext } from "../../context/DataProvider";
+import Users from "../../models/users";
+
 interface TableProps {
   onOpenModal: () => void;
-
+  setDataUsers: (value: Users) => void;
 }
 
-const TableUsers = ({onOpenModal}:TableProps) => {
+const TableUsers = ({ onOpenModal, setDataUsers }:TableProps) => {
   const data = useContext(DataContext);
   const [search, setSearch] = useState("");
+
+  const handleClickModal = (item: Users) => {
+    setDataUsers(item)
+
+    onOpenModal()
+  }
 
   return (
     <Container className="mt-5" fluid="sm">
@@ -61,7 +70,7 @@ const TableUsers = ({onOpenModal}:TableProps) => {
                 <td>
                   <Button
                     variant="primary"
-                    onClick={() => onOpenModal()}
+                    onClick={() => handleClickModal(item)}
                   >
                     Detalhes
                   </Button>
